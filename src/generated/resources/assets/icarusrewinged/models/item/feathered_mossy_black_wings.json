@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "icarusrewinged:item/feathered_mossy_black_wings"
+  }
+}
