@@ -29,8 +29,6 @@ public abstract class WingsLayerMixin<T extends LivingEntity, M extends EntityMo
     @Unique private FixedLeatherWingsModel<T> fixedLeatherWings;
     @Unique private FixedLightWingsModel<T> fixedLightWings;
     @Unique private FixedZanzasWingsModel<T> fixedZanzasWings;
-
-    // ФИКС: Меняем тип на родительский класс оригинального Икаруса, чтобы он принимал ЛЮБЫЕ модели крыльев
     @Unique private WingEntityModel<T> currentRenderModel;
 
 
@@ -45,7 +43,7 @@ public abstract class WingsLayerMixin<T extends LivingEntity, M extends EntityMo
     }
 
     // =========================================================================
-    // ТОЧКА 1: СМЕЩАЕМ ВСЮ МАТРИЦУ РЕНДЕРА ИКАРА В САМОМ НАЧАЛЕ (До рендера модели)
+    // СМЕЩАЕМ ВСЮ МАТРИЦУ РЕНДЕРА ИКАРА В САМОМ НАЧАЛЕ (До рендера модели)
     // =========================================================================
     @Inject(
             method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
@@ -60,7 +58,6 @@ public abstract class WingsLayerMixin<T extends LivingEntity, M extends EntityMo
 
         ItemStack stack = dev.cammiescorner.icarus.api.client.IcarusAPIClient.getWingsForRendering(entity);
 
-        // Если игрок надел наши кастомные крылья, сдвигаем весь PoseStack по Y на лету!
         if (stack.getItem() instanceof CustomTextureWingItem customWings) {
             matrices.translate(0.0D, customWings.getModelOffsetY(), customWings.getModelOffsetZ());
         }
@@ -111,7 +108,6 @@ public abstract class WingsLayerMixin<T extends LivingEntity, M extends EntityMo
             else if (original instanceof LightWingsModel)     swapped = this.fixedLightWings;
         }
 
-        // ФИКС: Безопасно сохраняем любую из наших моделей для рендера кастомных слоев текстур
         if (swapped != null) {
             this.currentRenderModel = swapped;
         }
@@ -119,7 +115,7 @@ public abstract class WingsLayerMixin<T extends LivingEntity, M extends EntityMo
         return swapped;
     }
 
-    // Draw Separate and Custom Layers (ОЧИЩЕННЫЙ И ИСПРАВЛЕННЫЙ)
+    // Draw Separate and Custom Layers
     @Inject(
             method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
             at = {

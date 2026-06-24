@@ -21,9 +21,7 @@ public class IcarusReItems {
 
     // // // Wings Register
 
-    // // MYTHIC
 
-    // // MYTHIC END
 
     // // LEGENDARY
 
@@ -200,20 +198,6 @@ public class IcarusReItems {
             () -> new CustomTextureWingItem("membrane_mossy_black", "leather", false, Rarity.RARE, false, false, false, 0.0F, 0.0F));
 
     // // RARE END
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public static void register(IEventBus eventBus) {

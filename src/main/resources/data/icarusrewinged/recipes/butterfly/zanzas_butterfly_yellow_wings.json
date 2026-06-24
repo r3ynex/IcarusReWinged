@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "CEC"
+  ],
+  "key": {
+    "A": { "item": "minecraft:honeycomb" },
+    "B": { "item": "minecraft:lily_of_the_valley" },
+    "C": { "item": "minecraft:phantom_membrane" },
+    "D": { "item": "minecraft:elytra" },
+    "E": { "item": "minecraft:dandelion" }
+  },
+  "result": {
+    "item": "icarusrewinged:zanzas_butterfly_yellow_wings",
+    "count": 1
+  }
+}

@@ -38,12 +38,11 @@ public class CustomTextureWingItem extends WingItem {
         this.modelOffsetZ = modelOffsetZ;
     }
 
-    // 2. Конструктор без анимации (Передаем modelOffsetY)
+    // 2. Конструктор без анимации
     public CustomTextureWingItem(String textureName, String modelType, boolean hasSecondLayer, Rarity rarity, boolean isSeparate, boolean isEmissive, boolean isTranslucent, float modelOffsetY, float modelOffsetZ) {
         this(textureName, modelType, hasSecondLayer, 1, false, rarity, isSeparate, isEmissive, isTranslucent, modelOffsetY, modelOffsetZ);
     }
 
-    // 3. Дефолтный конструктор (Смещение 0.0F по умолчанию)
     // 3. Дефолтный конструктор (Смещение 0.0F по умолчанию)
     public CustomTextureWingItem(String textureName) {
         this(textureName, "feathered", false, 1, false, Rarity.COMMON, false, false, false, 0.0F, 0.0F);

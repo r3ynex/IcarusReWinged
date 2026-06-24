@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:crying_obsidian" },
+    "B": { "item": "minecraft:dragon_head" },
+    "C": { "item": "minecraft:dragon_breath" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "item": "icarusrewinged:membrane_the_end_wings",
+    "count": 1
+  }
+}

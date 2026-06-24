@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "CEC"
+  ],
+  "key": {
+    "A": { "item": "minecraft:honeycomb" },
+    "B": { "item": "minecraft:yellow_wool" },
+    "C": { "item": "minecraft:leather" },
+    "D": { "item": "minecraft:elytra" },
+    "E": { "item": "minecraft:light_blue_wool" }
+  },
+  "result": {
+    "item": "icarusrewinged:membrane_gradient_blueyellow_wings",
+    "count": 1
+  }
+}

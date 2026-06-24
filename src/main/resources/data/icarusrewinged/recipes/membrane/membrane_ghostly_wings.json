@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:blue_ice" },
+    "B": { "item": "minecraft:sea_lantern" },
+    "C": { "item": "minecraft:amethyst_shard" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "item": "icarusrewinged:membrane_ghostly_wings",
+    "count": 1
+  }
+}
