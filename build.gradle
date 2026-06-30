@@ -191,3 +191,7 @@ tasks.named('build') {
 tasks.withType(ProcessResources).configureEach {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
+
+tasks.named('jar', Jar) {
+    archiveFileName = "${mod_id}-${mod_version}-1.21.1-neoforge.jar"
+}

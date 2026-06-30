@@ -56,6 +56,9 @@ public class CustomTextureWingItem extends WingItem {
     public boolean isSecondLayerEmissive() { return this.isEmissive; }
     public boolean isTranslucent() { return this.isTranslucent; }
 
+    public Rarity getCustomRarity() {
+        return this.rarity;
+    }
 
     private int getCurrentFrame() {
         if (frames <= 1) return 0;
