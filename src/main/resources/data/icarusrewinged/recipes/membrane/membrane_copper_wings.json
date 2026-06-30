@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:copper_block" },
+    "B": { "item": "minecraft:oxidized_copper" },
+    "C": { "item": "minecraft:copper_ingot" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "item": "icarusrewinged:membrane_copper_wings",
+    "count": 1
+  }
+}

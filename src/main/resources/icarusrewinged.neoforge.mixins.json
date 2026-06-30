@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.r3x.icarusrewinged.mixin",
+  "refmap": "icarusrewinged.refmap.json",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "WingsLayerMixin",
+    "ItemStackRarityMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

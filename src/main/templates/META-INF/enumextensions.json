@@ -1,0 +1,22 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/world/item/Rarity",
+      "name": "ICARUSREWINGED_LEGENDARY",
+      "constructor": "(ILjava/lang/String;Ljava/util/function/UnaryOperator;)V",
+      "parameters": {
+        "class": "com/r3x/icarusrewinged/registry/IcarusReEnumParams",
+        "field": "LEGENDARY_PROXY"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/item/Rarity",
+      "name": "ICARUSREWINGED_MYTHIC",
+      "constructor": "(ILjava/lang/String;Ljava/util/function/UnaryOperator;)V",
+      "parameters": {
+        "class": "com/r3x/icarusrewinged/registry/IcarusReEnumParams",
+        "field": "MYTHIC_PROXY"
+      }
+    }
+  ]
+}

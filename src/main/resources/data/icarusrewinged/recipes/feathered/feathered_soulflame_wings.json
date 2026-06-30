@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:warped_stem" },
+    "B": { "item": "minecraft:soul_campfire" },
+    "C": { "item": "minecraft:soul_torch" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "item": "icarusrewinged:feathered_soulflame_wings",
+    "count": 1
+  }
+}

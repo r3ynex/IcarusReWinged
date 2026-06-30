@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "CEC"
+  ],
+  "key": {
+    "A": { "item": "minecraft:honeycomb" },
+    "B": { "item": "minecraft:lilac" },
+    "C": { "item": "minecraft:phantom_membrane" },
+    "D": { "item": "minecraft:elytra" },
+    "E": { "item": "minecraft:pink_petals" }
+  },
+  "result": {
+    "item": "icarusrewinged:zanzas_butterfly_pink_wings",
+    "count": 1
+  }
+}

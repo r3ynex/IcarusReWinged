@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:bone_block" },
+    "B": { "item": "minecraft:skeleton_skull" },
+    "C": { "item": "minecraft:bone" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "item": "icarusrewinged:membrane_bone_wings",
+    "count": 1
+  }
+}
