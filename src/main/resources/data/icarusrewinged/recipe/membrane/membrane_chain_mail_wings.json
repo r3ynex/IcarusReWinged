@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:iron_block" },
+    "B": { "item": "minecraft:iron_bars" },
+    "C": { "item": "minecraft:iron_ingot" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "id": "icarusrewinged:membrane_chain_mail_wings",
+    "count": 1
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:crying_obsidian" },
+    "B": { "item": "minecraft:amethyst_block" },
+    "C": { "item": "minecraft:ink_sac" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "id": "icarusrewinged:feathered_midnight_wings",
+    "count": 1
+  }
+}

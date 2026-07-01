@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:emerald_block" },
+    "B": { "item": "minecraft:diamond_block" },
+    "C": { "item": "minecraft:gold_ingot" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "id": "icarusrewinged:membrane_gems_wings",
+    "count": 1
+  }
+}

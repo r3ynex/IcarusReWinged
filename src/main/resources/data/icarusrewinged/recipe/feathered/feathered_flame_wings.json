@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:magma_block" },
+    "B": { "item": "minecraft:campfire" },
+    "C": { "item": "minecraft:blaze_rod" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "id": "icarusrewinged:feathered_flame_wings",
+    "count": 1
+  }
+}
