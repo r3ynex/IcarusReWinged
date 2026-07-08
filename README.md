@@ -7,6 +7,10 @@
   <a href="https://dalink.to/polinatassel" target="_blank"><img src="https://img.shields.io/badge/artist-polina__tess-55c6f9?style=for-the-badge" alt="Artist Polina Tess"></a>
   <a href="https://www.curseforge.com/minecraft/mc-mods/icarus" target="_blank"><img src="https://img.shields.io/badge/required-icarus-e05d44?style=for-the-badge" alt="Required Icarus Mod"></a>
 </p>
+<p align="center">
+  <a href="https://www.curseforge.com/minecraft/mc-mods/icarus-rewinged" target="_blank"><img src="https://img.shields.io/badge/curseforge-download-f16436?style=for-the-badge&logo=curseforge&logoColor=white" alt="Download on CurseForge"></a>
+  <a href="https://modrinth.com/mod/icarus-rewinged" target="_blank"><img src="https://img.shields.io/badge/modrinth-download-00af5c?style=for-the-badge&logo=modrinth&logoColor=white" alt="Download on Modrinth"></a>
+</p>
 
 <h2 align="center">An unofficial add-on for the <strong>Icarus</strong> mod that revamps wing visuals and introduces new custom <strong>animated</strong> wing skins.</h2>
 <h3 align="center">- The mod also includes crafts for all kinds of wings, so you can craft them on survival! (Starting from version <strong>1.1.0</strong>)</h3>
