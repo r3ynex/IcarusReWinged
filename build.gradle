@@ -107,20 +107,22 @@ publishing {
 	}
 }
 
+def outputJarName = "icarusrewinged-${mod_version}-1.21.1-fabric.jar"
+
+tasks.named('jar', Jar) {
+	archiveFileName = outputJarName
+}
+
+tasks.named('remapJar') {
+	archiveFileName = outputJarName
+}
+
 tasks.register('copyToLauncher', Copy) {
-	dependsOn jar
-	from jar.archiveFile
+	dependsOn remapJar
+	from remapJar.archiveFile
 	into file("C:/Users/Administrator/AppData/Roaming/PrismLauncher/instances/IcarusRW-1.21.1-Fabrik/minecraft/mods")
 }
 
 tasks.named('build') {
 	finalizedBy 'copyToLauncher'
-}
-
-tasks.withType(ProcessResources).configureEach {
-	duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}
-
-tasks.named('jar', Jar) {
-	archiveFileName = "icarusrewinged-${mod_version}-1.21.1-fabric.jar"
 }
