@@ -1,5 +1,6 @@
 package com.r3x.icarusrewinged.item;
 
+import dev.cammiescorner.icarus.IcarusConfig;
 import dev.cammiescorner.icarus.item.WingItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
@@ -36,6 +37,44 @@ public class CustomTextureWingItem extends WingItem {
         this.modelOffsetY = modelOffsetY;
         this.modelOffsetZ = modelOffsetZ;
     }
+
+    // // // // Just for this fkn durability to make it working
+    @Override
+    public boolean onFlightTick(net.minecraft.world.entity.LivingEntity entity, net.minecraft.world.item.ItemStack wings, int ticks) {
+        if (!entity.level().isClientSide() && entity instanceof net.minecraft.world.entity.player.Player player) {
+            if (!player.isCreative() && dev.cammiescorner.icarus.IcarusConfig.wingsDurability > 0) {
+                if (player.tickCount % 20 == 0) {
+                    wings.hurtAndBreak(1, player, net.minecraft.world.entity.EquipmentSlot.CHEST);
+                }
+            }
+        }
+        return this.isUsable(entity, wings);
+    }
+
+    @Override
+    public boolean isUsable(net.minecraft.world.entity.LivingEntity entity, net.minecraft.world.item.ItemStack stack) {
+        if (dev.cammiescorner.icarus.IcarusConfig.wingsDurability <= 0) {
+            return true;
+        }
+        int maxDurability = dev.cammiescorner.icarus.IcarusConfig.wingsDurability;
+        return stack.getDamageValue() < maxDurability - 1;
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, net.minecraft.world.level.Level level, net.minecraft.world.entity.Entity entity, int slot, boolean selected) {
+        super.inventoryTick(stack, level, entity, slot, selected);
+
+        int realDurability = dev.cammiescorner.icarus.IcarusConfig.wingsDurability;
+
+        if (realDurability > 1) {
+            Integer currentMax = stack.get(net.minecraft.core.component.DataComponents.MAX_DAMAGE);
+            if (currentMax == null || currentMax != realDurability) {
+                stack.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE, realDurability);
+            }
+        }
+    }
+
+    // // // //
 
     // 2. Конструктор без анимации
     public CustomTextureWingItem(String textureName, String modelType, boolean hasSecondLayer, Rarity rarity, boolean isSeparate, boolean isEmissive, boolean isTranslucent, float modelOffsetY, float modelOffsetZ) {

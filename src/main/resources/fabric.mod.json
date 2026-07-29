@@ -37,7 +37,14 @@
 		"fabricloader": ">=0.19.3",
 		"minecraft": "~1.21.1",
 		"java": ">=21",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"icarus": "*"
+	},
+
+	"custom": {
+		"loom:load_order": [
+			"after:icarus"
+		]
 	},
 
 	"accessWidener": "icarusrewinged.classtweaker"
