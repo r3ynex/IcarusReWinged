@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "com.r3x.icarusrewinged.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"ItemStackRarityMixin",
+		"RarityMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

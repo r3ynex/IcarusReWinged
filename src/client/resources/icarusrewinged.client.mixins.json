@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "com.r3x.client.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"WingsLayerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

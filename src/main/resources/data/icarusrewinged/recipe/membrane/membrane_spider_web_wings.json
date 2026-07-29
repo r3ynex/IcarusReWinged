@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:cobweb" },
+    "B": { "item": "minecraft:spider_eye" },
+    "C": { "item": "minecraft:string" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "id": "icarusrewinged:membrane_spider_web_wings",
+    "count": 1
+  }
+}

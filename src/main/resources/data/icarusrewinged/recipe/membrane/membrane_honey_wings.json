@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:honey_block" },
+    "B": { "item": "minecraft:honeycomb_block" },
+    "C": { "item": "minecraft:honeycomb" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "id": "icarusrewinged:membrane_honey_wings",
+    "count": 1
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "icarusrewinged:item/discord_hikaritoyami_wings"
+  }
+}

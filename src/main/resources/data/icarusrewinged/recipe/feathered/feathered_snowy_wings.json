@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:snow_block" },
+    "B": { "item": "minecraft:blue_ice" },
+    "C": { "item": "minecraft:snowball" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "id": "icarusrewinged:feathered_snowy_wings",
+    "count": 1
+  }
+}

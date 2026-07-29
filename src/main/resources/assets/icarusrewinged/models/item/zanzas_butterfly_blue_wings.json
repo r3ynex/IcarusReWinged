@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "icarusrewinged:item/zanzas_butterfly_blue_wings"
+  }
+}

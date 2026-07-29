@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:redstone_lamp" },
+    "B": { "item": "minecraft:sticky_piston" },
+    "C": { "item": "minecraft:lightning_rod" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "id": "icarusrewinged:membrane_steampunk_wings",
+    "count": 1
+  }
+}

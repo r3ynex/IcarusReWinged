@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "CEC"
+  ],
+  "key": {
+    "A": { "item": "minecraft:honeycomb" },
+    "B": { "item": "minecraft:black_wool" },
+    "C": { "item": "minecraft:leather" },
+    "D": { "item": "minecraft:elytra" },
+    "E": { "item": "minecraft:flowering_azalea" }
+  },
+  "result": {
+    "id": "icarusrewinged:membrane_mossy_black_wings",
+    "count": 1
+  }
+}

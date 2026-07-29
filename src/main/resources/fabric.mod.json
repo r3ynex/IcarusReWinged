@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "icarusrewinged",
+	"version": "${version}",
+	"name": "Icarus: Re-Winged",
+	"description": "Icarus: Re-Winged is a customization add-on for the Icarus mod.\nIt adds a wide variety of wings, ranging from chainmail to End wings, and many other stunning and highly detailed options!\n\nThe mod also fixes some bugs and shortcomings of Icarus.\n\nTechnical implementation: r3ynex\nIdea & Textures: Polina Tess\n\n---\n\nIcarus: Re-Winged — это дополнение с кастомизацией для мода Icarus.\nОно добавляет множество различных крыльев: от кольчужных до крыльев Энда и многих других, не менее красивых и крутых вариантов!\n\nТак же мод исправляет некоторые баги и недоработки Icarus.\n\nТехническая часть: r3ynex\nИдея и Текстуры: Polina Tess",
+	"authors": [
+		"r3ynex",
+		"Polina_Tess"
+	],
+	"contact": {
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/icarus-rewinged",
+		"sources": "https://github.com/r3ynex/IcarusReWinged"
+	},
+	"license": "MIT",
+	"icon": "assets/icarusrewinged/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.r3x.icarusrewinged.IcarusReWinged"
+		],
+		"fabric-datagen": [
+			"com.r3x.icarusrewinged.datagen.DataGenerators"
+		],
+		"client": [
+			"com.r3x.client.IcarusReWingedClient"
+		]
+	},
+	"mixins": [
+		"icarusrewinged.mixins.json",
+		{
+			"config": "icarusrewinged.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+
+	"accessWidener": "icarusrewinged.classtweaker"
+}

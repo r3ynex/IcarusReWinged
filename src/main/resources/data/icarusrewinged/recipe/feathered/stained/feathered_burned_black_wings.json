@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "CEC"
+  ],
+  "key": {
+    "A": { "item": "minecraft:honeycomb" },
+    "B": { "item": "minecraft:black_wool" },
+    "C": { "item": "minecraft:feather" },
+    "D": { "item": "minecraft:elytra" },
+    "E": { "item": "minecraft:torch" }
+  },
+  "result": {
+    "id": "icarusrewinged:feathered_burned_black_wings",
+    "count": 1
+  }
+}
