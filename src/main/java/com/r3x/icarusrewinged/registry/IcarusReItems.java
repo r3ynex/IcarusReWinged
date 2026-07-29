@@ -21,7 +21,7 @@ public class IcarusReItems {
     private static <T extends Item> T register(String name, T item) {
         Registry.register(
                 BuiltInRegistries.ITEM,
-                ResourceLocation.fromNamespaceAndPath("icarusrewinged", name),
+                ResourceLocation.tryBuild("icarusrewinged", name),
                 item
         );
         ALL_ITEMS.add(item);

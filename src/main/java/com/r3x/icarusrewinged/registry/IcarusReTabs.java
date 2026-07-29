@@ -18,7 +18,7 @@ public class IcarusReTabs {
 
     public static final ResourceKey<CreativeModeTab> REWINGED_TAB_KEY = ResourceKey.create(
             Registries.CREATIVE_MODE_TAB,
-            ResourceLocation.fromNamespaceAndPath("icarusrewinged", "rewinged_tab")
+            ResourceLocation.tryBuild("icarusrewinged", "rewinged_tab")
     );
 
     public static final CreativeModeTab REWINGED_TAB = Registry.register(

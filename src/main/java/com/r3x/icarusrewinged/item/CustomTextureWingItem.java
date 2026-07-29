@@ -22,8 +22,9 @@ public class CustomTextureWingItem extends WingItem {
     private final float modelOffsetZ;
     private final boolean pingPong;
 
+    // 1. Главный конструктор (Теперь принимает float modelOffsetY в конце)
     public CustomTextureWingItem(String textureName, String modelType, boolean hasSecondLayer, int frames, boolean pingPong, Rarity rarity, boolean isSeparate, boolean isEmissive, boolean isTranslucent, float modelOffsetY, float modelOffsetZ) {
-        super(WingItem.WingType.FEATHERED);
+        super(DyeColor.WHITE, DyeColor.WHITE, WingItem.WingType.FEATHERED);
         this.textureName = textureName;
         this.modelType = modelType.toLowerCase();
         this.hasSecondLayer = hasSecondLayer;
@@ -55,9 +56,7 @@ public class CustomTextureWingItem extends WingItem {
     public boolean isSecondLayerEmissive() { return this.isEmissive; }
     public boolean isTranslucent() { return this.isTranslucent; }
 
-    public Rarity getCustomRarity() {
-        return this.rarity;
-    }
+    public Rarity getRarity(ItemStack stack) { return this.rarity; }
 
     private int getCurrentFrame() {
         if (frames <= 1) return 0;
@@ -73,10 +72,12 @@ public class CustomTextureWingItem extends WingItem {
         }
     }
 
+    // Утилитарный метод, который автоматически определяет подпапку для первого слоя
     private String getLayer1Folder() {
         return (frames > 1) ? "entity/animated/" : "entity/";
     }
 
+    // Утилитарный метод, который автоматически определяет подпапку для второго (светящегося/дополнительного) слоя
     private String getLayer2Folder() {
         if (isEmissive) {
             return (frames > 1) ? "entity/emission/animated/" : "entity/emission/";
@@ -84,40 +85,43 @@ public class CustomTextureWingItem extends WingItem {
         return (frames > 1) ? "entity/animated/" : "entity/";
     }
 
+    // ==========================================
+    // ТЕКСТУРНЫЕ СЛОИ (С АВТО-ПОДПАПКАМИ)
+    // ==========================================
     public ResourceLocation getCustomLayer1() {
-        if (isSeparate) return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/entity/empty_wings.png");
-        if (frames > 1) return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/" + getLayer1Folder() + textureName + "_" + getCurrentFrame() + ".png");
-        return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/" + getLayer1Folder() + textureName + ".png");
+        if (isSeparate) return ResourceLocation.tryBuild("icarusrewinged", "textures/entity/empty_wings.png");
+        if (frames > 1) return ResourceLocation.tryBuild("icarusrewinged", "textures/" + getLayer1Folder() + textureName + "_" + getCurrentFrame() + ".png");
+        return ResourceLocation.tryBuild("icarusrewinged", "textures/" + getLayer1Folder() + textureName + ".png");
     }
 
     public ResourceLocation getCustomLayer2() {
-        if (isSeparate || !hasSecondLayer) return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/entity/empty_wings.png");
+        if (isSeparate || !hasSecondLayer) return ResourceLocation.tryBuild("icarusrewinged", "textures/entity/empty_wings.png");
         String suffix = isEmissive ? "_e" : "_2";
-        if (frames > 1) return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/" + getLayer2Folder() + textureName + suffix + "_" + getCurrentFrame() + ".png");
-        return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/" + getLayer2Folder() + textureName + suffix + ".png");
+        if (frames > 1) return ResourceLocation.tryBuild("icarusrewinged", "textures/" + getLayer2Folder() + textureName + suffix + "_" + getCurrentFrame() + ".png");
+        return ResourceLocation.tryBuild("icarusrewinged", "textures/" + getLayer2Folder() + textureName + suffix + ".png");
     }
 
     public ResourceLocation getCustomLayer1L() {
-        if (frames > 1) return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/" + getLayer1Folder() + textureName + "_l_" + getCurrentFrame() + ".png");
-        return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/" + getLayer1Folder() + textureName + "_l.png");
+        if (frames > 1) return ResourceLocation.tryBuild("icarusrewinged", "textures/" + getLayer1Folder() + textureName + "_l_" + getCurrentFrame() + ".png");
+        return ResourceLocation.tryBuild("icarusrewinged", "textures/" + getLayer1Folder() + textureName + "_l.png");
     }
 
     public ResourceLocation getCustomLayer1R() {
-        if (frames > 1) return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/" + getLayer1Folder() + textureName + "_r_" + getCurrentFrame() + ".png");
-        return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/" + getLayer1Folder() + textureName + "_r.png");
+        if (frames > 1) return ResourceLocation.tryBuild("icarusrewinged", "textures/" + getLayer1Folder() + textureName + "_r_" + getCurrentFrame() + ".png");
+        return ResourceLocation.tryBuild("icarusrewinged", "textures/" + getLayer1Folder() + textureName + "_r.png");
     }
 
     public ResourceLocation getCustomLayer2L() {
-        if (!hasSecondLayer) return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/entity/empty_wings.png");
+        if (!hasSecondLayer) return ResourceLocation.tryBuild("icarusrewinged", "textures/entity/empty_wings.png");
         String suffix = isEmissive ? "_e" : "_2";
-        if (frames > 1) return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/" + getLayer2Folder() + textureName + suffix + "_l_" + getCurrentFrame() + ".png");
-        return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/" + getLayer2Folder() + textureName + suffix + "_l.png");
+        if (frames > 1) return ResourceLocation.tryBuild("icarusrewinged", "textures/" + getLayer2Folder() + textureName + suffix + "_l_" + getCurrentFrame() + ".png");
+        return ResourceLocation.tryBuild("icarusrewinged", "textures/" + getLayer2Folder() + textureName + suffix + "_l.png");
     }
 
     public ResourceLocation getCustomLayer2R() {
-        if (!hasSecondLayer) return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/entity/empty_wings.png");
+        if (!hasSecondLayer) return ResourceLocation.tryBuild("icarusrewinged", "textures/entity/empty_wings.png");
         String suffix = isEmissive ? "_e" : "_2";
-        if (frames > 1) return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/" + getLayer2Folder() + textureName + suffix + "_r_" + getCurrentFrame() + ".png");
-        return ResourceLocation.fromNamespaceAndPath("icarusrewinged", "textures/" + getLayer2Folder() + textureName + suffix + "_r.png");
+        if (frames > 1) return ResourceLocation.tryBuild("icarusrewinged", "textures/" + getLayer2Folder() + textureName + suffix + "_r_" + getCurrentFrame() + ".png");
+        return ResourceLocation.tryBuild("icarusrewinged", "textures/" + getLayer2Folder() + textureName + suffix + "_r.png");
     }
 }

@@ -8,17 +8,17 @@ import net.minecraft.resources.ResourceLocation;
 public class IcarusReModels {
 
     public static final ModelLayerLocation FIXED_FEATHERED = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath("icarusrewinged", "fixed_feathered"), "main");
+            ResourceLocation.tryBuild("icarusrewinged", "fixed_feathered"), "main");
     public static final ModelLayerLocation FIXED_DISCORD = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath("icarusrewinged", "fixed_discord"), "main");
+            ResourceLocation.tryBuild("icarusrewinged", "fixed_discord"), "main");
     public static final ModelLayerLocation FIXED_FLANDRES = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath("icarusrewinged", "fixed_flandres"), "main");
+            ResourceLocation.tryBuild("icarusrewinged", "fixed_flandres"), "main");
     public static final ModelLayerLocation FIXED_LEATHER = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath("icarusrewinged", "fixed_leather"), "main");
+            ResourceLocation.tryBuild("icarusrewinged", "fixed_leather"), "main");
     public static final ModelLayerLocation FIXED_LIGHT = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath("icarusrewinged", "fixed_light"), "main");
+            ResourceLocation.tryBuild("icarusrewinged", "fixed_light"), "main");
     public static final ModelLayerLocation FIXED_ZANZAS = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath("icarusrewinged", "fixed_zanzas"), "main");
+            ResourceLocation.tryBuild("icarusrewinged", "fixed_zanzas"), "main");
 
     public static void registerLayerDefinitions() {
         EntityModelLayerRegistry.registerModelLayer(FIXED_FEATHERED, FixedFeatheredWingsModel::getLayerDefinition);

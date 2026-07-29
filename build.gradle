@@ -47,15 +47,15 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	modImplementation "curse.maven:icarus-428151:8250322"
-	modImplementation "curse.maven:common-network-806044:7087484"
-	modImplementation "curse.maven:resourceful-config-714059:6467774"
-	modImplementation files("libs/Sparkweave-Fabric-1.21.1-development.jar")
+	modImplementation "curse.maven:icarus-428151:8247927"
+	modImplementation "curse.maven:common-network-806044:8357963"
+	modImplementation "curse.maven:resourceful-config-714059:6223996"
+	modImplementation "curse.maven:sparkweave-911456:6161137"
 
 	modImplementation "curse.maven:trinkets-341284:5534317"
 
-	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:6.1.2"
-	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:6.1.2"
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.2.3"
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.2.3"
 }
 
 processResources {
@@ -68,7 +68,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
+	it.options.release = 17
 }
 
 java {
@@ -77,8 +77,8 @@ java {
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
 }
 
 jar {
@@ -107,20 +107,22 @@ publishing {
 	}
 }
 
+def outputJarName = "icarusrewinged-${mod_version}-1.20.1-fabric.jar"
+
+tasks.named('jar', Jar) {
+	archiveFileName = outputJarName
+}
+
+tasks.named('remapJar') {
+	archiveFileName = outputJarName
+}
+
 tasks.register('copyToLauncher', Copy) {
-	dependsOn jar
-	from jar.archiveFile
-	into file("C:/Users/Administrator/AppData/Roaming/PrismLauncher/instances/IcarusRW-1.21.1-Fabrik/minecraft/mods")
+	dependsOn remapJar
+	from remapJar.archiveFile
+	into file("C:/Users/Administrator/AppData/Roaming/PrismLauncher/instances/IcarusRW-1.20.1-Fabric/minecraft/mods")
 }
 
 tasks.named('build') {
 	finalizedBy 'copyToLauncher'
-}
-
-tasks.withType(ProcessResources).configureEach {
-	duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}
-
-tasks.named('jar', Jar) {
-	archiveFileName = "icarusrewinged-${mod_version}-1.21.1-fabric.jar"
 }

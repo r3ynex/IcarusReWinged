@@ -20,9 +20,9 @@ public class ModItemTagsProvider extends FabricTagProvider.ItemTagProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         TagKey<Item> ICARUS_WINGS = TagKey.create(Registries.ITEM,
-                ResourceLocation.fromNamespaceAndPath("icarus", "wings"));
+                ResourceLocation.tryBuild("icarus", "wings"));
         TagKey<Item> ICARUS_MELTS = TagKey.create(Registries.ITEM,
-                ResourceLocation.fromNamespaceAndPath("icarus", "melts"));
+                ResourceLocation.tryBuild("icarus", "melts"));
 
         var wingsBuilder = getOrCreateTagBuilder(ICARUS_WINGS);
         var meltsBuilder = getOrCreateTagBuilder(ICARUS_MELTS);
