@@ -23,15 +23,22 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
 
         TagKey<Item> ICARUS_WINGS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("icarus", "wings"));
-
         var icarusBuilder = this.tag(ICARUS_WINGS);
 
         IcarusReItems.ITEMS.getEntries().forEach(registryObject -> {
             Item item = registryObject.get();
-
             if (item != IcarusReItems.MOD_LOGO.get()) {
-
                 icarusBuilder.add(item);
+            }
+        });
+
+        TagKey<Item> ICARUS_MELTS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("icarus", "melts"));
+        var meltsBuilder = this.tag(ICARUS_MELTS);
+
+        IcarusReItems.ITEMS.getEntries().forEach(registryObject -> {
+            Item item = registryObject.get();
+            if (item != IcarusReItems.MOD_LOGO.get()) {
+                meltsBuilder.add(item);
             }
         });
     }
