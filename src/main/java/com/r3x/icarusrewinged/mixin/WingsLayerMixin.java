@@ -45,12 +45,11 @@ public abstract class WingsLayerMixin<T extends LivingEntity, M extends EntityMo
 
     @Inject(
             method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
-            at = {
-                    @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;popPose()V"),
-                    @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;m_85849_()V")
-            },
+            at = @At("HEAD"),
+            cancellable = true,
             remap = false
     )
+
     private void onRenderOverride(PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity,
                                   float limbAngle, float limbDistance, float tickDelta, float animationProgress,
                                   float headYaw, float headPitch, CallbackInfo ci) {
