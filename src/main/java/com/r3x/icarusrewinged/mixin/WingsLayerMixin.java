@@ -1,11 +1,14 @@
 package com.r3x.icarusrewinged.mixin;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.r3x.icarusrewinged.client.IcarusReModels;
 import com.r3x.icarusrewinged.client.models.*;
 import com.r3x.icarusrewinged.item.CustomTextureWingItem;
+import dev.cammiescorner.icarus.api.client.IcarusAPIClient;
 import dev.cammiescorner.icarus.client.renderers.WingsLayer;
 import dev.cammiescorner.icarus.client.models.*;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -29,8 +32,6 @@ public abstract class WingsLayerMixin<T extends LivingEntity, M extends EntityMo
     @Unique private FixedLeatherWingsModel<T> fixedLeatherWings;
     @Unique private FixedLightWingsModel<T> fixedLightWings;
     @Unique private FixedZanzasWingsModel<T> fixedZanzasWings;
-    @Unique private WingEntityModel<T> currentRenderModel;
-
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(RenderLayerParent<T, M> context, EntityModelSet loader, CallbackInfo ci) {
@@ -42,80 +43,6 @@ public abstract class WingsLayerMixin<T extends LivingEntity, M extends EntityMo
         this.fixedZanzasWings = new FixedZanzasWingsModel<>(loader.bakeLayer(IcarusReModels.FIXED_ZANZAS));
     }
 
-    // =========================================================================
-    // СМЕЩАЕМ ВСЮ МАТРИЦУ РЕНДЕРА ИКАРА В САМОМ НАЧАЛЕ (До рендера модели)
-    // =========================================================================
-    @Inject(
-            method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
-            at = @At("HEAD"),
-            remap = false
-    )
-    private void onRenderHead(com.mojang.blaze3d.vertex.PoseStack matrices,
-                              net.minecraft.client.renderer.MultiBufferSource vertexConsumers,
-                              int light, T entity, float limbAngle, float limbDistance,
-                              float tickDelta, float animationProgress, float headYaw, float headPitch,
-                              CallbackInfo ci) {
-
-        ItemStack stack = dev.cammiescorner.icarus.api.client.IcarusAPIClient.getWingsForRendering(entity);
-
-        if (stack.getItem() instanceof CustomTextureWingItem customWings) {
-            matrices.translate(0.0D, customWings.getModelOffsetY(), customWings.getModelOffsetZ());
-        }
-    }
-
-    // Select Model
-    @ModifyVariable(
-            method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
-            at = @At(value = "STORE"),
-            ordinal = 0,
-            remap = false
-    )
-    private WingEntityModel<T> swapWingModel(WingEntityModel<T> original,
-                                             com.mojang.blaze3d.vertex.PoseStack matrices,
-                                             net.minecraft.client.renderer.MultiBufferSource vertexConsumers,
-                                             int light, T entity) {
-
-        this.currentRenderModel = null;
-        if (original == null) return null;
-
-        WingEntityModel<T> swapped = original;
-        ItemStack stack = dev.cammiescorner.icarus.api.client.IcarusAPIClient.getWingsForRendering(entity);
-
-        if (stack.getItem() instanceof CustomTextureWingItem customWings) {
-            String modelType = customWings.getCustomModelType();
-
-            if ("discord".equals(modelType)) {
-                swapped = this.fixedDiscordsWings;
-            }
-            else if ("flandres".equals(modelType)) {
-                swapped = this.fixedFlandresWings;
-            }
-            else if ("zanzas".equals(modelType)) {
-                swapped = this.fixedZanzasWings;
-            }
-            else if ("leather".equals(modelType) || "dragon".equals(modelType)) {
-                swapped = this.fixedLeatherWings;
-            }
-            else if ("light".equals(modelType)) {
-                swapped = this.fixedLightWings;
-            }
-            else {
-                swapped = this.fixedFeatheredWings;
-            }
-        } else {
-            if (original instanceof FeatheredWingsModel) swapped = this.fixedFeatheredWings;
-            else if (original instanceof LeatherWingsModel)   swapped = this.fixedLeatherWings;
-            else if (original instanceof LightWingsModel)     swapped = this.fixedLightWings;
-        }
-
-        if (swapped != null) {
-            this.currentRenderModel = swapped;
-        }
-
-        return swapped;
-    }
-
-    // Draw Separate and Custom Layers
     @Inject(
             method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
             at = {
@@ -124,67 +51,73 @@ public abstract class WingsLayerMixin<T extends LivingEntity, M extends EntityMo
             },
             remap = false
     )
-    private void onRenderSeparateWings(com.mojang.blaze3d.vertex.PoseStack matrices,
-                                       net.minecraft.client.renderer.MultiBufferSource vertexConsumers,
-                                       int light, T entity, float limbAngle, float limbDistance,
-                                       float tickDelta, float animationProgress, float headYaw, float headPitch,
-                                       CallbackInfo ci) {
+    private void onRenderOverride(PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity,
+                                  float limbAngle, float limbDistance, float tickDelta, float animationProgress,
+                                  float headYaw, float headPitch, CallbackInfo ci) {
 
-        ItemStack stack = dev.cammiescorner.icarus.api.client.IcarusAPIClient.getWingsForRendering(entity);
+        ItemStack stack = IcarusAPIClient.getWingsForRendering(entity);
 
-        if (this.currentRenderModel != null && stack.getItem() instanceof CustomTextureWingItem customWings) {
-            int overlay = OverlayTexture.NO_OVERLAY;
-            String modelType = customWings.getCustomModelType();
+        // if Icarus Wings
+        if (!(stack.getItem() instanceof CustomTextureWingItem customWings)) {
+            return;
+        }
 
-            ModelPart leftPart = this.currentRenderModel.leftWing;
-            ModelPart rightPart = this.currentRenderModel.rightWing;
+        // if IRW wings
+        ci.cancel();
 
-            RenderType baseRenderType = customWings.isTranslucent() ?
-                    RenderType.entityTranslucentCull(customWings.getCustomLayer1()) :
-                    RenderType.entityCutoutNoCull(customWings.getCustomLayer1());
+        String modelType = customWings.getCustomModelType();
+        WingEntityModel<T> wingModel;
+        if ("discord".equals(modelType)) wingModel = this.fixedDiscordsWings;
+        else if ("flandres".equals(modelType)) wingModel = this.fixedFlandresWings;
+        else if ("zanzas".equals(modelType)) wingModel = this.fixedZanzasWings;
+        else if ("leather".equals(modelType) || "dragon".equals(modelType)) wingModel = this.fixedLeatherWings;
+        else if ("light".equals(modelType)) wingModel = this.fixedLightWings;
+        else wingModel = this.fixedFeatheredWings;
 
-            // ==========================================================
-            // 1. РАЗДЕЛЬНЫЕ КРЫЛЬЯ (isSeparate = true)
-            // ==========================================================
-            if (customWings.isSeparate()) {
-                // Проверяем флаг полупрозрачности для левой и правой стороны отдельно
-                RenderType leftType1 = customWings.isTranslucent() ? RenderType.entityTranslucentCull(customWings.getCustomLayer1L()) : RenderType.entityCutoutNoCull(customWings.getCustomLayer1L());
-                leftPart.render(matrices, vertexConsumers.getBuffer(leftType1), light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        matrices.pushPose();
+        matrices.translate(0.0F, customWings.getModelOffsetY(), customWings.getModelOffsetZ() + 0.125F);
 
-                RenderType rightType1 = customWings.isTranslucent() ? RenderType.entityTranslucentCull(customWings.getCustomLayer1R()) : RenderType.entityCutoutNoCull(customWings.getCustomLayer1R());
-                rightPart.render(matrices, vertexConsumers.getBuffer(rightType1), light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        WingsLayer<T, M> thiz = (WingsLayer<T, M>) (Object) this;
+        thiz.getParentModel().copyPropertiesTo(wingModel);
+        wingModel.setupAnim(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 
-                if (customWings.hasSecondLayer()) {
-                    int lightLevel = customWings.isSecondLayerEmissive() ? 15728880 : light;
+        int overlay = OverlayTexture.NO_OVERLAY;
+        ModelPart leftPart = wingModel.leftWing;
+        ModelPart rightPart = wingModel.rightWing;
 
-                    // Для второго слоя: если он полупрозрачный — даем translucent, если светящийся — eyes, иначе cutout
-                    RenderType leftType2 = customWings.isTranslucent() ? RenderType.entityTranslucentCull(customWings.getCustomLayer2L()) :
-                            (customWings.isSecondLayerEmissive() ? RenderType.eyes(customWings.getCustomLayer2L()) : RenderType.entityCutoutNoCull(customWings.getCustomLayer2L()));
+        if (customWings.isSeparate()) {
+            RenderType leftType1 = customWings.isTranslucent() ? RenderType.entityTranslucentCull(customWings.getCustomLayer1L()) : RenderType.entityCutoutNoCull(customWings.getCustomLayer1L());
+            leftPart.render(matrices, vertexConsumers.getBuffer(leftType1), light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
 
-                    RenderType rightType2 = customWings.isTranslucent() ? RenderType.entityTranslucentCull(customWings.getCustomLayer2R()) :
-                            (customWings.isSecondLayerEmissive() ? RenderType.eyes(customWings.getCustomLayer2R()) : RenderType.entityCutoutNoCull(customWings.getCustomLayer2R()));
+            RenderType rightType1 = customWings.isTranslucent() ? RenderType.entityTranslucentCull(customWings.getCustomLayer1R()) : RenderType.entityCutoutNoCull(customWings.getCustomLayer1R());
+            rightPart.render(matrices, vertexConsumers.getBuffer(rightType1), light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
 
-                    leftPart.render(matrices, vertexConsumers.getBuffer(leftType2), lightLevel, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-                    rightPart.render(matrices, vertexConsumers.getBuffer(rightType2), lightLevel, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-                }
+            if (customWings.hasSecondLayer()) {
+                int lightLevel = customWings.isSecondLayerEmissive() ? 15728880 : light;
+
+                RenderType leftType2 = customWings.isTranslucent() ? RenderType.entityTranslucentCull(customWings.getCustomLayer2L()) :
+                        (customWings.isSecondLayerEmissive() ? RenderType.eyes(customWings.getCustomLayer2L()) : RenderType.entityCutoutNoCull(customWings.getCustomLayer2L()));
+                RenderType rightType2 = customWings.isTranslucent() ? RenderType.entityTranslucentCull(customWings.getCustomLayer2R()) :
+                        (customWings.isSecondLayerEmissive() ? RenderType.eyes(customWings.getCustomLayer2R()) : RenderType.entityCutoutNoCull(customWings.getCustomLayer2R()));
+
+                leftPart.render(matrices, vertexConsumers.getBuffer(leftType2), lightLevel, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+                rightPart.render(matrices, vertexConsumers.getBuffer(rightType2), lightLevel, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
             }
-            // ==========================================================
-            // 2. ОДИНАКОВЫЕ КРЫЛЬЯ (isSeparate = false)
-            // ==========================================================
-            else {
-                leftPart.render(matrices, vertexConsumers.getBuffer(baseRenderType), light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-                rightPart.render(matrices, vertexConsumers.getBuffer(baseRenderType), light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        } else {
+            RenderType baseRenderType = customWings.isTranslucent() ? RenderType.entityTranslucentCull(customWings.getCustomLayer1()) : RenderType.entityCutoutNoCull(customWings.getCustomLayer1());
+            leftPart.render(matrices, vertexConsumers.getBuffer(baseRenderType), light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            rightPart.render(matrices, vertexConsumers.getBuffer(baseRenderType), light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
 
-                if (customWings.hasSecondLayer()) {
-                    int lightLevel = customWings.isSecondLayerEmissive() ? 15728880 : light;
+            if (customWings.hasSecondLayer()) {
+                int lightLevel = customWings.isSecondLayerEmissive() ? 15728880 : light;
+                RenderType type2 = customWings.isTranslucent() ? RenderType.entityTranslucentCull(customWings.getCustomLayer2()) :
+                        (customWings.isSecondLayerEmissive() ? RenderType.eyes(customWings.getCustomLayer2()) : RenderType.entityCutoutNoCull(customWings.getCustomLayer2()));
 
-                    RenderType type2 = customWings.isTranslucent() ? RenderType.entityTranslucentCull(customWings.getCustomLayer2()) :
-                            (customWings.isSecondLayerEmissive() ? RenderType.eyes(customWings.getCustomLayer2()) : RenderType.entityCutoutNoCull(customWings.getCustomLayer2()));
-
-                    leftPart.render(matrices, vertexConsumers.getBuffer(type2), lightLevel, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-                    rightPart.render(matrices, vertexConsumers.getBuffer(type2), lightLevel, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-                }
+                leftPart.render(matrices, vertexConsumers.getBuffer(type2), lightLevel, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+                rightPart.render(matrices, vertexConsumers.getBuffer(type2), lightLevel, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
             }
         }
+
+        matrices.popPose();
     }
 }
