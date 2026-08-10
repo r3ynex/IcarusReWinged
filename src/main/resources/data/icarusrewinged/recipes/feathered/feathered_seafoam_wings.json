@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "C C"
+  ],
+  "key": {
+    "A": { "item": "minecraft:barrel" },
+    "B": { "item": "minecraft:heart_of_the_sea" },
+    "C": { "item": "minecraft:sea_pickle" },
+    "D": { "item": "minecraft:elytra" }
+  },
+  "result": {
+    "item": "icarusrewinged:feathered_seafoam_wings",
+    "count": 1
+  }
+}
